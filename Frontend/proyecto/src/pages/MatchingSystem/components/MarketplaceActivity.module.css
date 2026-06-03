@@ -1,0 +1,93 @@
+.activitySidebar {
+  background-color: #0f172a; /* Dark theme */
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  color: white;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin: 0 0 1.5rem 0;
+}
+
+.statsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.statItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 1rem;
+}
+
+.statItem:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.statLabel {
+  font-size: 0.875rem;
+  color: #cbd5e1;
+}
+
+.statValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+}
+
+.statValueGreen {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #10b981; /* Emerald 500 */
+}
+
+.premiumBox {
+  background-color: #1e293b;
+  border-radius: 0.375rem;
+  padding: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.premiumTitle {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #cbd5e1;
+  margin: 0 0 0.75rem 0;
+}
+
+.premiumText {
+  font-size: 0.875rem;
+  color: #f1f5f9;
+  line-height: 1.5;
+  margin: 0 0 1rem 0;
+}
+
+.updateBtn {
+  background: none;
+  border: none;
+  color: #34d399; /* Emerald 400 */
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.updateBtn:hover {
+  color: #6ee7b7;
+}

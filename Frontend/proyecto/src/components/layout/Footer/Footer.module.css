@@ -1,0 +1,74 @@
+.footer {
+  background-color: #0f172a; /* Slate 900 */
+  color: #cbd5e1; /* Slate 300 */
+  padding: 3rem 2rem;
+  border-top: 1px solid #1e293b;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.brandSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.brandName {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+}
+
+.copyright {
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.linksSection {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.link {
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.link:hover {
+  color: white;
+}
+
+.socialSection {
+  display: flex;
+  gap: 1rem;
+}
+
+.socialIcon {
+  color: #cbd5e1;
+  background-color: rgba(255, 255, 255, 0.1);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.socialIcon:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
