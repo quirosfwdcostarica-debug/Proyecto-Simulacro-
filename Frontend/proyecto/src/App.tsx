@@ -1,9 +1,14 @@
 import { useState } from 'react';
 import ucrCampusImg from './assets/ucr_campus.png';
 import alumniUcrLogo from './assets/alumni_ucr_logo.png';
+import { Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { ProtectedRoute } from './ProtectedRoute';
+import Dashboard from './Dashboard';
 import './App.css';
 
-interface FormData {
+export interface FormData {
+  userType: string;
+  esEstudiante: boolean;
   correoUCR: string;
   aceptaTerminos: boolean;
   fullName: string;
@@ -22,6 +27,8 @@ interface FormData {
 }
 
 const INITIAL_FORM_DATA: FormData = {
+  userType: '',
+  esEstudiante: false,
   correoUCR: '',
   aceptaTerminos: false,
   fullName: '',
@@ -74,9 +81,10 @@ const CARRERAS = [
 ];
 
 function App() {
-  const [step, setStep] = useState<number>(1);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<FormData>(INITIAL_FORM_DATA);
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
+const [step, setStep] = useState<number>(1);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -120,53 +128,37 @@ function App() {
     const newErrors: Partial<Record<keyof FormData, string>> = {};
 
     if (currentStep === 1) {
-      // Step 1: Personal Information
-      if (!formData.fullName.trim()) {
-        newErrors.fullName = 'El nombre completo es obligatorio.';
-      }
+      if (!formData.fullName.trim()) newErrors.fullName = 'El nombre completo es obligatorio.';
       if (!formData.personalEmail) {
         newErrors.personalEmail = 'El correo personal es obligatorio.';
-      } else if (!/\S+@\S+\.\S+/.test(formData.personalEmail.trim())) {
+      } else if (!/^\S+@\S+\.\S+$/.test(formData.personalEmail.trim())) {
         newErrors.personalEmail = 'Formato de correo no válido.';
       }
-      if (!formData.phone.trim()) {
-        newErrors.phone = 'El número de teléfono es obligatorio.';
-      }
-      if (!formData.location.trim()) {
-        newErrors.location = 'La ubicación es obligatoria.';
-      }
+      if (!formData.phone.trim()) newErrors.phone = 'El número de teléfono es obligatorio.';
+      if (!formData.location.trim()) newErrors.location = 'La ubicación es obligatoria.';
     } else if (currentStep === 2) {
-      // Step 2: Verificación Institucional
+      if (!formData.userType) newErrors.userType = 'Seleccione un tipo de usuario.';
       const trimmedEmail = formData.correoUCR.trim();
       if (!trimmedEmail) {
         newErrors.correoUCR = 'El correo institucional es obligatorio.';
       } else if (!trimmedEmail.toLowerCase().endsWith('@ucr.ac.cr')) {
         newErrors.correoUCR = 'El correo debe ser con dominio institucional (@ucr.ac.cr).';
       }
-      if (!formData.aceptaTerminos) {
-        newErrors.aceptaTerminos = 'Debe aceptar los términos de uso y políticas.';
-      }
+      if (!formData.aceptaTerminos) newErrors.aceptaTerminos = 'Debe aceptar los términos de uso y políticas.';
     } else if (currentStep === 3) {
-      // Step 3: Información Académica
-      if (!formData.carrera) {
-        newErrors.carrera = 'Debe seleccionar una carrera.';
-      }
-      if (!formData.grado) {
-        newErrors.grado = 'Debe seleccionar un grado académico.';
-      }
-      if (!formData.anioGraduacion) {
-        newErrors.anioGraduacion = 'El año de graduación es obligatorio.';
-      } else {
-        const year = parseInt(formData.anioGraduacion.trim());
-        if (isNaN(year) || year < 1940 || year > 2026) {
-          newErrors.anioGraduacion = 'Ingrese un año válido.';
+      if (!formData.carrera) newErrors.carrera = 'Debe seleccionar una carrera.';
+      if (!formData.grado) newErrors.grado = 'Debe seleccionar un grado académico.';
+      if (formData.userType === 'exalumno') {
+        if (!formData.anioGraduacion) {
+          newErrors.anioGraduacion = 'El año de graduación es obligatorio para exalumnos.';
+        } else {
+          const year = parseInt(formData.anioGraduacion.trim());
+          if (isNaN(year) || year < 1940 || year > new Date().getFullYear()) {
+            newErrors.anioGraduacion = 'Ingrese un año válido.';
+          }
         }
       }
     } else if (currentStep === 4) {
-      // Step 4: Información Profesional
-      if (!formData.empresa.trim()) {
-        newErrors.empresa = 'El lugar de trabajo es obligatorio.';
-      }
       if (!formData.cargo.trim()) {
         newErrors.cargo = 'El cargo es obligatorio.';
       }
@@ -188,9 +180,30 @@ function App() {
   };
 
   const handleNext = () => {
-    if (validateStep(step)) {
-      setStep((prev) => prev + 1);
+    if (!validateStep(step)) return;
+  
+    // Final step: complete registration and redirect based on user type
+    if (step === 5) {
+      const isStudent = formData.userType === 'estudiante';
+      // Update esEstudiante flag accordingly
+      setFormData(prev => ({
+        ...prev,
+        esEstudiante: isStudent,
+      }));
+      // Navigate to appropriate dashboard
+      if (isStudent) {
+        navigate('/dashboard');
+      } else {
+        // Placeholder route for alumni dashboard
+        navigate('/alumni-dashboard');
+      }
+      // Move to success screen (step 6)
+      setStep(6);
+      return;
     }
+  
+    // Intermediate steps: just advance
+    setStep(prev => prev + 1);
   };
 
   const handleBack = () => {
@@ -352,10 +365,10 @@ function App() {
                        formData.phone.trim() !== '' && 
                        formData.location.trim() !== '';
 
-  const isStep2Valid = formData.correoUCR.trim().toLowerCase().endsWith('@ucr.ac.cr') && 
+  const isStep2Valid = formData.userType && formData.correoUCR.trim().toLowerCase().endsWith('@ucr.ac.cr') && formData.aceptaTerminos; 
                        formData.aceptaTerminos;
 
-  const isStep3Valid = formData.carrera !== '' && 
+  const isStep3Valid = formData.carrera !== '' && formData.grado !== '' && (formData.userType !== 'exalumno' || (formData.anioGraduacion.trim() !== '' && !isNaN(parseInt(formData.anioGraduacion.trim())) && parseInt(formData.anioGraduacion.trim()) >= 1940 && parseInt(formData.anioGraduacion.trim()) <= 2026)); 
                        formData.grado !== '' && 
                        formData.anioGraduacion.trim() !== '' && 
                        !isNaN(parseInt(formData.anioGraduacion.trim())) && 
@@ -377,7 +390,9 @@ function App() {
         </div>
         
         <ul className="nav-links">
-          <li><a href="#" className="nav-link">Dashboard</a></li>
+          {formData.esEstudiante && (
+            <li><Link to="/dashboard" className="nav-link">Dashboard</Link></li>
+          )}
           <li><a href="#" className="nav-link">Directory</a></li>
           <li><a href="#" className="nav-link">Jobs</a></li>
           <li><a href="#" className="nav-link">Donations</a></li>
@@ -467,7 +482,63 @@ function App() {
             {/* Left Column (Only rendered for Steps 2, 3, 5) */}
             {isTwoColumn && (
               <div className="left-panel">
-                {step === 2 && (
+                      {step === 2 && (
+        <>
+          <div className="form-group">
+            <label htmlFor="userType">Tipo de Usuario</label>
+            <div className="input-wrapper">
+              <label className="radio-group">
+                <input
+                  type="radio"
+                  name="userType"
+                  value="estudiante"
+                  checked={formData.userType === 'estudiante'}
+                  onChange={handleInputChange}
+                />
+                Estudiante
+              </label>
+              <label className="radio-group">
+                <input
+                  type="radio"
+                  name="userType"
+                  value="exalumno"
+                  checked={formData.userType === 'exalumno'}
+                  onChange={handleInputChange}
+                />
+                Exalumno
+              </label>
+            </div>
+            {errors.userType && <span style={{ color: '#ef4444', fontSize: '13px', marginTop: '6px', display: 'block' }}>{errors.userType}</span>}
+          </div>
+          <div className="form-group">
+            <label htmlFor="correoUCR">Correo Electrónico UCR</label>
+            <div className="input-wrapper has-icon">
+              <span className="input-icon-left"><MailIcon /></span>
+              <input
+                type="email"
+                id="correoUCR"
+                name="correoUCR"
+                placeholder="nombre.apellido@ucr.ac.cr"
+                value={formData.correoUCR}
+                onChange={handleInputChange}
+              />
+            </div>
+            {errors.correoUCR && <span style={{ color: '#ef4444', fontSize: '13px', marginTop: '6px', display: 'block' }}>{errors.correoUCR}</span>}
+          </div>
+          <label className="checkbox-group">
+            <input
+              type="checkbox"
+              className="checkbox-input"
+              checked={formData.aceptaTerminos}
+              onChange={() => handleCheckboxChange('aceptaTerminos')}
+            />
+            <span className="checkbox-label">
+              Acepto los términos de uso y políticas de privacidad de la Fundación.
+            </span>
+          </label>
+          {errors.aceptaTerminos && <span style={{ color: '#ef4444', fontSize: '13px', marginTop: '6px', display: 'block' }}>{errors.aceptaTerminos}</span>}
+        </>
+      )}
                   <>
                     <div className="badge">
                       <SparklesIcon />
@@ -500,7 +571,69 @@ function App() {
                   </>
                 )}
 
-                {step === 3 && (
+                      {step === 3 && (
+        <>
+          <div className="form-group">
+            <label htmlFor="carrera">Carrera / Especialidad</label>
+            <select
+              id="carrera"
+              name="carrera"
+              value={formData.carrera}
+              onChange={handleInputChange}
+            >
+              <option value="">-- Seleccione una carrera --</option>
+              {CARRERAS.map((c) => (
+                <option key={c} value={c}>{c}</option>
+              ))}
+            </select>
+            {errors.carrera && <span style={{ color: '#ef4444', fontSize: '13px', marginTop: '6px', display: 'block' }}>{errors.carrera}</span>}
+          </div>
+          <div className="form-group">
+            <label htmlFor="grado">Grado Académico Máximo Obtenido</label>
+            <select
+              id="grado"
+              name="grado"
+              value={formData.grado}
+              onChange={handleInputChange}
+            >
+              <option value="">-- Seleccione el grado obtenido --</option>
+              {GRADOS.map((g) => (
+                <option key={g} value={g}>{g}</option>
+              ))}
+            </select>
+            {errors.grado && <span style={{ color: '#ef4444', fontSize: '13px', marginTop: '6px', display: 'block' }}>{errors.grado}</span>}
+          </div>
+          {formData.userType === 'exalumno' && (
+            <div className="form-group">
+              <label htmlFor="anioGraduacion">Año de Graduación</label>
+              <div className="input-wrapper">
+                <input
+                  type="text"
+                  id="anioGraduacion"
+                  name="anioGraduacion"
+                  placeholder="Ej. 2018"
+                  value={formData.anioGraduacion}
+                  onChange={handleInputChange}
+                />
+              </div>
+              {errors.anioGraduacion && <span style={{ color: '#ef4444', fontSize: '13px', marginTop: '6px', display: 'block' }}>{errors.anioGraduacion}</span>}
+            </div>
+          )}
+          <div className="form-group">
+            <label htmlFor="facultad">Carné de Estudiante (Opcional)</label>
+            <div className="input-wrapper">
+              <input
+                type="text"
+                id="facultad"
+                name="facultad"
+                placeholder="Ej. A84321"
+                value={formData.facultad}
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+        </>
+      )}
                   <>
                     <div className="badge" style={{ backgroundColor: '#e0f2fe', color: '#0369a1' }}>
                       <GraduationCapIcon />
@@ -935,10 +1068,15 @@ function App() {
                 </div>
 
               </div>
+              
+              {/* Routing for Dashboard */}
+              <Routes>
+<Route path="/dashboard" element={<ProtectedRoute formData={formData} requiredRole="estudiante"><Dashboard /></ProtectedRoute>} />
+              </Routes>
 
               {/* Bottom Panels (Only rendered below the Card in centered steps 1, 4) */}
               {!isTwoColumn && step === 1 && (
-                <div className="bottom-hero-panel">
+                <div className="bottom-panel">
                   <img src={ucrCampusImg} alt="UCR Campus" className="hero-thumbnail" />
                   <div className="hero-content">
                     <h3 className="hero-title">Tu legado continúa aquí</h3>
