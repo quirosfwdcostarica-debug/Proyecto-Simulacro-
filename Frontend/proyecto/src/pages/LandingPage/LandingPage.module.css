@@ -1,0 +1,9 @@
+.landingLayout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.landingLayout main {
+  flex: 1;
+}

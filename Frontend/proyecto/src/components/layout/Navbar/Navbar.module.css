@@ -1,0 +1,136 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  height: 64px;
+  background-color: white;
+  border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.matchingNavbar {
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.brandName {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #004d99;
+}
+
+.navLinks {
+  display: flex;
+  gap: 2rem;
+  height: 100%;
+}
+
+.navLinks a {
+  text-decoration: none;
+  color: #4b5563;
+  font-weight: 500;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.navLinks a:hover {
+  color: #111827;
+}
+
+.navLinks a.active {
+  color: #004d99;
+  border-bottom-color: #004d99;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.iconBtn {
+  background: none;
+  border: none;
+  color: #4b5563;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.iconBtn:hover {
+  color: #111827;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.searchContainer {
+  margin-right: 1rem;
+}
+
+.topSearch {
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  border: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+  width: 250px;
+  font-size: 0.875rem;
+  outline: none;
+}
+
+.topSearch:focus {
+  border-color: #004d99;
+  background-color: white;
+}
+
+.matchingSearchContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 500px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 1rem;
+  color: #9ca3af;
+}
+
+.matchingSearchInput {
+  width: 100%;
+  padding: 0.625rem 1rem 0.625rem 2.75rem;
+  border-radius: 9999px;
+  border: none;
+  background-color: #f3f4f6;
+  font-size: 0.875rem;
+  outline: none;
+  transition: background-color 0.2s;
+}
+
+.matchingSearchInput:focus {
+  background-color: #e5e7eb;
+}
