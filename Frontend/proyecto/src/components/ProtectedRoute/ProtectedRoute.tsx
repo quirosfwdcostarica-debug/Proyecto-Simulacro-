@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import type { ReactNode } from 'react';
-import type { FormData } from './App';
+import type { FormData } from '../../App';
 
 interface ProtectedRouteProps {
   formData: FormData;

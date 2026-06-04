@@ -1,9 +1,15 @@
 import { useState } from 'react';
+import { 
+  SparklesIcon, ShieldIcon, UsersIcon, InfoIcon, MailIcon, 
+  UserIcon, PhoneIcon, MapPinIcon, ArrowRightIcon, BellIcon, 
+  GearIcon, GraduationCapIcon, AwardIcon, BriefcaseIcon, HeartIcon, 
+  LinkedInIcon, SuccessCheckIcon 
+} from './components/ui/Icons/Icons';
 import ucrCampusImg from './assets/ucr_campus.png';
 import alumniUcrLogo from './assets/alumni_ucr_logo.png';
 import { Routes, Route, Link, useNavigate } from 'react-router-dom';
-import { ProtectedRoute } from './ProtectedRoute';
-import Dashboard from './Dashboard';
+import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
+import Dashboard from './pages/Dashboard/Dashboard';
 import './App.css';
 
 export interface FormData {
@@ -216,125 +222,7 @@ const [step, setStep] = useState<number>(1);
     setErrors({});
   };
 
-  // SVGs definition
-  const SparklesIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
-    </svg>
-  );
 
-  const ShieldIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-      <path d="m9 12 2 2 4-4" />
-    </svg>
-  );
-
-  const UsersIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
-      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-    </svg>
-  );
-
-  const InfoIcon = () => (
-    <svg className="info-alert-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="10" />
-      <line x1="12" y1="16" x2="12" y2="12" />
-      <line x1="12" y1="8" x2="12.01" y2="8" />
-    </svg>
-  );
-
-  const MailIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <rect width="20" height="16" x="2" y="4" rx="2" />
-      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-    </svg>
-  );
-
-  const UserIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-      <circle cx="12" cy="7" r="4" />
-    </svg>
-  );
-
-  const PhoneIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-    </svg>
-  );
-
-  const MapPinIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-      <circle cx="12" cy="10" r="3" />
-    </svg>
-  );
-
-  const ArrowRightIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-      <line x1="5" y1="12" x2="19" y2="12" />
-      <polyline points="12 5 19 12 12 19" />
-    </svg>
-  );
-
-  const BellIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
-      <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
-    </svg>
-  );
-
-  const GearIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="3" />
-      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
-    </svg>
-  );
-
-  const GraduationCapIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" />
-      <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5" />
-    </svg>
-  );
-
-  const AwardIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="8" r="7" />
-      <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
-    </svg>
-  );
-
-  const BriefcaseIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <rect width="20" height="14" x="2" y="7" rx="2" ry="2" />
-      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-    </svg>
-  );
-
-  const HeartIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-    </svg>
-  );
-
-  const LinkedInIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-      <rect width="4" height="12" x="2" y="9" rx="1" />
-      <circle cx="4" cy="4" r="2" />
-    </svg>
-  );
-
-  const SuccessCheckIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="20 6 9 17 4 12" />
-    </svg>
-  );
 
   // Layout attributes based on steps
   // NEW ORDER:
@@ -365,15 +253,9 @@ const [step, setStep] = useState<number>(1);
                        formData.phone.trim() !== '' && 
                        formData.location.trim() !== '';
 
-  const isStep2Valid = formData.userType && formData.correoUCR.trim().toLowerCase().endsWith('@ucr.ac.cr') && formData.aceptaTerminos; 
-                       formData.aceptaTerminos;
+  const isStep2Valid = formData.userType && formData.correoUCR.trim().toLowerCase().endsWith('@ucr.ac.cr') && formData.aceptaTerminos;
 
-  const isStep3Valid = formData.carrera !== '' && formData.grado !== '' && (formData.userType !== 'exalumno' || (formData.anioGraduacion.trim() !== '' && !isNaN(parseInt(formData.anioGraduacion.trim())) && parseInt(formData.anioGraduacion.trim()) >= 1940 && parseInt(formData.anioGraduacion.trim()) <= 2026)); 
-                       formData.grado !== '' && 
-                       formData.anioGraduacion.trim() !== '' && 
-                       !isNaN(parseInt(formData.anioGraduacion.trim())) && 
-                       parseInt(formData.anioGraduacion.trim()) >= 1940 && 
-                       parseInt(formData.anioGraduacion.trim()) <= 2026;
+  const isStep3Valid = formData.carrera !== '' && formData.grado !== '' && (formData.userType !== 'exalumno' || (formData.anioGraduacion.trim() !== '' && !isNaN(parseInt(formData.anioGraduacion.trim())) && parseInt(formData.anioGraduacion.trim()) >= 1940 && parseInt(formData.anioGraduacion.trim()) <= 2026));
 
   const isStep4Valid = formData.empresa.trim() !== '' && 
                        formData.cargo.trim() !== '' && 
@@ -482,63 +364,7 @@ const [step, setStep] = useState<number>(1);
             {/* Left Column (Only rendered for Steps 2, 3, 5) */}
             {isTwoColumn && (
               <div className="left-panel">
-                      {step === 2 && (
-        <>
-          <div className="form-group">
-            <label htmlFor="userType">Tipo de Usuario</label>
-            <div className="input-wrapper">
-              <label className="radio-group">
-                <input
-                  type="radio"
-                  name="userType"
-                  value="estudiante"
-                  checked={formData.userType === 'estudiante'}
-                  onChange={handleInputChange}
-                />
-                Estudiante
-              </label>
-              <label className="radio-group">
-                <input
-                  type="radio"
-                  name="userType"
-                  value="exalumno"
-                  checked={formData.userType === 'exalumno'}
-                  onChange={handleInputChange}
-                />
-                Exalumno
-              </label>
-            </div>
-            {errors.userType && <span style={{ color: '#ef4444', fontSize: '13px', marginTop: '6px', display: 'block' }}>{errors.userType}</span>}
-          </div>
-          <div className="form-group">
-            <label htmlFor="correoUCR">Correo Electrónico UCR</label>
-            <div className="input-wrapper has-icon">
-              <span className="input-icon-left"><MailIcon /></span>
-              <input
-                type="email"
-                id="correoUCR"
-                name="correoUCR"
-                placeholder="nombre.apellido@ucr.ac.cr"
-                value={formData.correoUCR}
-                onChange={handleInputChange}
-              />
-            </div>
-            {errors.correoUCR && <span style={{ color: '#ef4444', fontSize: '13px', marginTop: '6px', display: 'block' }}>{errors.correoUCR}</span>}
-          </div>
-          <label className="checkbox-group">
-            <input
-              type="checkbox"
-              className="checkbox-input"
-              checked={formData.aceptaTerminos}
-              onChange={() => handleCheckboxChange('aceptaTerminos')}
-            />
-            <span className="checkbox-label">
-              Acepto los términos de uso y políticas de privacidad de la Fundación.
-            </span>
-          </label>
-          {errors.aceptaTerminos && <span style={{ color: '#ef4444', fontSize: '13px', marginTop: '6px', display: 'block' }}>{errors.aceptaTerminos}</span>}
-        </>
-      )}
+                {step === 2 && (
                   <>
                     <div className="badge">
                       <SparklesIcon />
@@ -571,69 +397,7 @@ const [step, setStep] = useState<number>(1);
                   </>
                 )}
 
-                      {step === 3 && (
-        <>
-          <div className="form-group">
-            <label htmlFor="carrera">Carrera / Especialidad</label>
-            <select
-              id="carrera"
-              name="carrera"
-              value={formData.carrera}
-              onChange={handleInputChange}
-            >
-              <option value="">-- Seleccione una carrera --</option>
-              {CARRERAS.map((c) => (
-                <option key={c} value={c}>{c}</option>
-              ))}
-            </select>
-            {errors.carrera && <span style={{ color: '#ef4444', fontSize: '13px', marginTop: '6px', display: 'block' }}>{errors.carrera}</span>}
-          </div>
-          <div className="form-group">
-            <label htmlFor="grado">Grado Académico Máximo Obtenido</label>
-            <select
-              id="grado"
-              name="grado"
-              value={formData.grado}
-              onChange={handleInputChange}
-            >
-              <option value="">-- Seleccione el grado obtenido --</option>
-              {GRADOS.map((g) => (
-                <option key={g} value={g}>{g}</option>
-              ))}
-            </select>
-            {errors.grado && <span style={{ color: '#ef4444', fontSize: '13px', marginTop: '6px', display: 'block' }}>{errors.grado}</span>}
-          </div>
-          {formData.userType === 'exalumno' && (
-            <div className="form-group">
-              <label htmlFor="anioGraduacion">Año de Graduación</label>
-              <div className="input-wrapper">
-                <input
-                  type="text"
-                  id="anioGraduacion"
-                  name="anioGraduacion"
-                  placeholder="Ej. 2018"
-                  value={formData.anioGraduacion}
-                  onChange={handleInputChange}
-                />
-              </div>
-              {errors.anioGraduacion && <span style={{ color: '#ef4444', fontSize: '13px', marginTop: '6px', display: 'block' }}>{errors.anioGraduacion}</span>}
-            </div>
-          )}
-          <div className="form-group">
-            <label htmlFor="facultad">Carné de Estudiante (Opcional)</label>
-            <div className="input-wrapper">
-              <input
-                type="text"
-                id="facultad"
-                name="facultad"
-                placeholder="Ej. A84321"
-                value={formData.facultad}
-                onChange={handleInputChange}
-              />
-            </div>
-          </div>
-        </>
-      )}
+                {step === 3 && (
                   <>
                     <div className="badge" style={{ backgroundColor: '#e0f2fe', color: '#0369a1' }}>
                       <GraduationCapIcon />
